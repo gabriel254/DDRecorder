@@ -112,7 +112,8 @@ class Uploader(BiliLive):
                 for filename in filelists:
                     if os.path.getsize(os.path.join(self.splits_dir, filename)) < 1024*1024:
                         continue
-                    title = filename
+                    roomid = str(self.config.get('spec', {}).get('room_id'))
+                    title = filename[len(roomid)+1:]  #去掉分P标题房间号
                     splits_parts.append(VideoPart(
                         path=os.path.join(self.splits_dir, filename),
                         title=title,
