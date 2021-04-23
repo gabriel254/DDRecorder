@@ -108,7 +108,7 @@ class Uploader(BiliLive):
                 splits_parts = []
                 datestr = global_start.strftime(
                     '%Y{y}%m{m}%d{d}').format(y='年', m='月', d='日')
-                filelists = os.listdir(self.splits_dir)
+                filelists = sorted(os.listdir(self.output_dir))
                 for filename in filelists:
                     if os.path.getsize(os.path.join(self.splits_dir, filename)) < 1024*1024:
                         continue
