@@ -215,6 +215,8 @@ class Processor(BiliLive):
         if self.config.get('spec', {}).get('uploader', {}).get('record', {}).get('upload_record', False):
             self.split(self.config.get('spec', {}).get('uploader', {})
                        .get('record', {}).get('split_interval', 3600))
+            if self.config.get('spec', {}).get('uploader', {}).get('record', {}).get('delete_merged_after_split', False):
+                os.remove(self.merged_file_path)
 
 
 if __name__ == "__main__":
