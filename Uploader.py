@@ -113,11 +113,12 @@ class Uploader(BiliLive):
                 datestr = global_start.strftime(
                     '%Y{y}%m{m}%d{d}').format(y='年', m='月', d='日')
                 filelists = sorted(os.listdir(self.splits_dir))
-                for filename in filelists:
+                for idx, filename in enumerate(filelists):
                     if os.path.getsize(os.path.join(self.splits_dir, filename)) < 1024*1024:
                         continue
-                    roomid = str(self.config.get('spec', {}).get('room_id'))
-                    title = filename[len(roomid)+1:]  #去掉分P标题房间号
+                    split_interval = int(self.config.get('spec', {}).get('uploader', {}).get('record', {}).get('split_interval', 3600))
+                    start_time = global_start + datetime.timedelta(seconds= idx * split_interval)
+                    title = start_time.strftime('%Y-%m-%d_%H:%M:%S')
                     splits_parts.append(VideoPart(
                         path=os.path.join(self.splits_dir, filename),
                         title=title,
