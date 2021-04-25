@@ -25,6 +25,7 @@ def upload(uploader: BilibiliUploader, parts: list, cr: int, title: str, tid: in
                 thread_pool_workers=thread_pool_workers,
                 max_retry=max_retry,
             )
+            os.remove(parts[0].path)
         for i in range(1, len(parts)):
             uploader.edit(
                 bvid=bvid,
@@ -32,6 +33,7 @@ def upload(uploader: BilibiliUploader, parts: list, cr: int, title: str, tid: in
                 max_retry=max_retry,
                 thread_pool_workers=thread_pool_workers
             )
+            os.remove(parts[i].path)
     else:
         while bvid is None:
             avid, bvid = uploader.upload(
@@ -46,6 +48,8 @@ def upload(uploader: BilibiliUploader, parts: list, cr: int, title: str, tid: in
                 max_retry=max_retry,
             )
             print(avid, bvid)
+            for i in range(len(parts)):
+                os.remove(parts[i].path)
     return avid, bvid
 
 
