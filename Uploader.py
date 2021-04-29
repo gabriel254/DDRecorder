@@ -75,7 +75,7 @@ class Uploader(BiliLive):
                 output_parts = []
                 datestr = global_start.strftime(
                     '%Y{y}%m{m}%d{d}').format(y='年', m='月', d='日')
-                filelists = sorted(os.listdir(self.output_dir))
+                filelists = sorted(os.listdir(self.output_dir), key=utils.get_split_index)
                 for filename in filelists:
                     if os.path.getsize(os.path.join(self.output_dir, filename)) < 1024*1024:
                         continue
@@ -112,7 +112,7 @@ class Uploader(BiliLive):
                 splits_parts = []
                 datestr = global_start.strftime(
                     '%Y{y}%m{m}%d{d}').format(y='年', m='月', d='日')
-                filelists = sorted(os.listdir(self.splits_dir))
+                filelists = sorted(os.listdir(self.splits_dir), key=utils.get_split_index)
                 for idx, filename in enumerate(filelists):
                     if os.path.getsize(os.path.join(self.splits_dir, filename)) < 1024*1024:
                         continue

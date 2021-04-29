@@ -88,6 +88,14 @@ def init_splits_dir(room_id: str, global_start: datetime.datetime, root_dir: str
     check_and_create_dir(dirs)
     return dirs
 
+def get_split_index(filename: list) -> int:
+    """
+    filename example: 1429883_2021-04-28_10-06-49_0.mp4
+    {room_id}_{year}-{month}-{day}_{hour}-{minute}-{second}_{split_index}.mp4
+    """
+    filename = os.path.splitext(filename)[0]
+    return int(filename.split("_")[-1])
+
 
 def get_merge_conf_path(room_id: str, global_start: datetime.datetime, root_dir: str = os.getcwd()) -> str:
     filename = os.path.join(root_dir, 'data', 'merge_confs',
